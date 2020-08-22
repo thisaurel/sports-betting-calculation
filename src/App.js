@@ -103,7 +103,11 @@ class App extends Component {
 
   handleChange(e) {
       let id = e.target.id;
-      let value = e.target.value;
+      let value = 0;
+      if (isNaN(e.target.value.replace(/,/g, '.'))) {
+        value = 0;
+      }
+      value = e.target.value.replace(/,/g, '.');
 
       let data = this.state.data;
       data[id] = value;
@@ -165,7 +169,10 @@ class App extends Component {
                                 <span className="input-group-text">€</span>
                               </div>
                             </div>
-
+                            <div className="form-group form-check">
+                              <input type="checkbox" className="form-check-input" id="calculate" checked={calculate} onChange={ this.handleChangeCalculate } />
+                              <label className="form-check-label" htmlFor="calculate">Calculate</label>
+                            </div>
                             <div className="form-group">
                                 <label htmlFor="o1">Odds: (the higher)</label>
                                 <input id="o1" className="form-control" type="text" value={data.o1} onChange={ this.handleChange }/>
@@ -195,7 +202,7 @@ class App extends Component {
                                 <input id="c" className="form-control" type="text" value={data.c} onChange={ this.handleChange }/>
                             </div>
                             <div className="form-group">
-                                <label>Total bet: </label>
+                                <label>Total bet:&nbsp;</label>
                                 <span id="t">{ breakdown.totalBet != null ? breakdown.totalBet + ' €' : '-'}</span>
                             </div>
                         </div>
